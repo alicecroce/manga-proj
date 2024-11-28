@@ -8,7 +8,7 @@ namespace manga_project
         //Tabelle
         public DbSet<Character> Characters { get; set; }
 
-        //Configuro dil db
+        //Configuro il db
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             const string connectionString = "Server=ALICE-ASUS\\SQLEXPRESS;Database=Manga;TrustServerCertificate=True;Trusted_Connection=True;";
