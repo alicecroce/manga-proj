@@ -1,31 +1,25 @@
 ﻿using manga_project.Domain;
+using manga_project.SeedWork;
+using Microsoft.EntityFrameworkCore;
 
 namespace manga_project.Repository
 {
-    public class CharacterRepository
+    public class CharacterRepository(AppDbContext ctx) : ICharRepository,IDisposable
     {
-        private readonly AppDbContext _context;
-
-        public CharacterRepository(AppDbContext context)
-        {
-            _context = context;
-        }
-
         public void InsertCharacter(string name)
         {
-            var character = new Character
+            ctx.Characters.Add(new()
             {
                 Name = name
-            };
-            _context.Characters.Add(character);
-            _context.SaveChanges();
+            });
+            ctx.SaveChanges();
         }
 
-        public IEnumerable<Character> GetAllCharacters()
-        {
-            return _context.Characters.ToList();
-        }
-        
-    }
+        public IEnumerable<Character> GetCharacter() => ctx.Characters.ToList();
+       
+        public void Dispose() => ctx.Dispose();
+
+    } 
 }
+    
 
