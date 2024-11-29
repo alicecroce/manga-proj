@@ -7,6 +7,8 @@
         public int ReleaseYear { get; set; }
         public int MagazineId { get; set; }
 
+        public ICollection<MangaCharacter> MangaCharacter { get; set; }
+
         public override string ToString()
         {
             return $"Character Id: {MangaId}, Title: {Title}, Release year: {ReleaseYear}, Magazine Id: {MagazineId} ";

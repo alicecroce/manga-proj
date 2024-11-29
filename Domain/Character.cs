@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Net;
 
 namespace manga_project.Domain
 {
@@ -11,6 +12,8 @@ namespace manga_project.Domain
         {
             return $"Character Id: {CharacterId}, Name: {Name} ";
         }
+
+        public ICollection<MangaCharacter> MangaCharacter { get; set; }
 
     }
 
