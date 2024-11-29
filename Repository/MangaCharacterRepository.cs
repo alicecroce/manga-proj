@@ -32,7 +32,15 @@ namespace manga_project.Repository
 
         public void Dispose() => ctx.Dispose();
 
-        public IEnumerable<MangaCharacter> GetAll() => ctx.MangaCharacter.ToList();
+        public IEnumerable<MangaCharacter> GetAll()
+        {
+            return ctx.MangaCharacter
+                  .Include(mc => mc.Manga)
+                  .Include(mc => mc.Character)
+                  .ToList();
+
+        }
+        /*=> ctx.MangaCharacter.ToList();*/
 
 
 
