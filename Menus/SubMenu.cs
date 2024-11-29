@@ -6,12 +6,12 @@ using static System.Console;
 namespace manga_project.Menus
 {
 
-    public class SubMenu(IRepository<Character> characterRepository) : IDisposable
+    public class SubMenu<T>(string entity, IRepository<T> repository, IInterviewer<T> interviewer) : IDisposable
     {
 
         public void Dispose()
         {
-            characterRepository.Dispose();
+            repository.Dispose();
         }
 
         public void Work()
@@ -33,28 +33,27 @@ namespace manga_project.Menus
 
             void InternalWork()
             {
-
                 WriteLine("\r\n Choose an operation on Manga: " +
-                    "\r\n (1) Insert Character " +
-                    "\r\n (2) Read All Character " +
-                    "\r\n (3) Update Character " +
-                    "\r\n (4) Delete Character " +
-                    "\r\n (5) Exit");
+                    "\r\n (1) Insert {0} " +
+                    "\r\n (2) Read All {0} " +
+                    "\r\n (3) Update {0}" +
+                    "\r\n (4) Delete {0}" +
+                    "\r\n (5) Exit", entity);
                 var choice = ReadLine();
 
                 switch (choice)
                 {
                     case "1":
-                        InsertCharacter();
+                        Insert();
                         break;
                     case "2":
-                        ReadAllCharacters();
+                        ReaAll();
                         break;
                     case "3":
-                        UpdateCharacter();
+                        Update();
                         break;
                     case "4":
-                        DeleteCharacter();
+                        Delete();
                         break;
                     case "5":
                         return;
@@ -66,54 +65,30 @@ namespace manga_project.Menus
             }
         }
 
-        private void InsertCharacter()
+        private void Insert()
         {
-            Write("Insert name character: ");
-            var charName = ReadLine();
-
-
-            if (string.IsNullOrEmpty(charName))
-            {
-                WriteLine("Please enter a valid user name or email");
-                return;
-            }
-
-            characterRepository.Insert(new Character
-            {
-                Name = charName,
-            });
+            var entity = interviewer.Create();
+            repository.Insert(entity);
         }
 
-        private void ReadAllCharacters()
+        private void ReaAll()
         {
-            foreach (var character in characterRepository.GetAll()) WriteLine(character.ToString());
+            foreach (var entity in repository.GetAll()) WriteLine($"{entity}");
         }
 
-        private void UpdateCharacter()
+        private void Update()
         {
-            Write("Insert the Id to update: ");
-            var id = ReadLine();
-
-            Write("Insert the name to update: ");
-            var name = ReadLine();
-
-
-            if (int.TryParse(id, out var characterId) && !string.IsNullOrEmpty(name))
-                characterRepository.Update(new Character
-                {
-                    CharacterId = int.Parse(id),
-                    Name = name
-                } );
-            //non ha parentesi perchè ha solo una istruzione da seguire quindi figura inline
+            var entity = interviewer.Update();
+            repository.Update(entity);
         }
 
-        private void DeleteCharacter()
+        private void Delete()
         {
             Write("Insert the Id to Delete: ");
             var id = ReadLine();
 
-            if (int.TryParse(id, out var characterId))
-                characterRepository.Delete(characterId);
+            if (int.TryParse(id, out var realId))
+                repository.Delete(realId);
             else
                 WriteLine("Id is not valid");
         }

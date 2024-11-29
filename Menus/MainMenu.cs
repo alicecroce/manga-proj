@@ -1,10 +1,11 @@
-﻿using manga_project.SeedWork;
+﻿using manga_project.Domain;
+using manga_project.SeedWork;
 using Microsoft.Data.SqlClient;
 using static System.Console;
 
 namespace manga_project.Menus
 {
-    public class MainMenu(SubMenu characterSubMenu) : IDisposable, IAsyncDisposable
+    public class MainMenu(SubMenu<Character> characterSubMenu) : IDisposable, IAsyncDisposable
     {
         public void Dispose()
         {
