@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 var appDbContext = new AppDbContext();
 ICharRepository characterRepository = new CharacterRepository(appDbContext);
-using var unitOfWork = new UnitOfWork(characterRepository);
+var characterSubMenu = new SubMenu(characterRepository);
+using var unitOfWork = new MainMenu(characterSubMenu);
 
-unitOfWork.Work();
+unitOfWork.Render();

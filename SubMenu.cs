@@ -1,14 +1,11 @@
-﻿using manga_project.Repository;
-using manga_project.Domain;
+﻿using manga_project.SeedWork;
 using Microsoft.Data.SqlClient;
 using static System.Console;
-using Azure;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using manga_project.SeedWork;
 
 namespace manga_project
 {
-    public class UnitOfWork(ICharRepository characterRepository) : IDisposable
+
+    public class SubMenu(ICharRepository characterRepository) : IDisposable
     {
 
         public void Dispose()
@@ -35,8 +32,7 @@ namespace manga_project
 
             void InternalWork()
             {
-                while (true)
-                {
+   
                     WriteLine("\r\n Choose an operation on Manga: " +
                         "\r\n (1) Insert Character " +
                         "\r\n (2) Read All Character " +
@@ -65,7 +61,7 @@ namespace manga_project
                             WriteLine("Invalid choice, please try again!");
                             break;
                     }
-                }
+                
             }
         }
 
@@ -98,7 +94,7 @@ namespace manga_project
             var name = ReadLine();
 
 
-            if (int.TryParse(id, out var characterId) && !string.IsNullOrEmpty(name)) 
+            if (int.TryParse(id, out var characterId) && !string.IsNullOrEmpty(name))
                 characterRepository.UpdateCharacter(characterId, name);
             //non ha parentesi perchè ha solo una istruzione da seguire quindi figura inline
         }
@@ -113,10 +109,5 @@ namespace manga_project
             else
                 WriteLine("Id is not valid");
         }
-
-
-
-
-
     }
 }
