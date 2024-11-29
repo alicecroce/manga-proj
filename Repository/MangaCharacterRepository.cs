@@ -39,11 +39,7 @@ namespace manga_project.Repository
                   .Include(mc => mc.Character)
                   .ToList();
 
-        }
-        /*=> ctx.MangaCharacter.ToList();*/
-
-
-
+        }  
 
     }
 }

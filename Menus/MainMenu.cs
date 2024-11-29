@@ -5,7 +5,7 @@ using static System.Console;
 
 namespace manga_project.Menus
 {
-    public class MainMenu(SubMenu<Character> characterSubMenu, SubMenu<MangaCharacter> mangaCharacterSubMenu) : IDisposable, IAsyncDisposable
+    public class MainMenu(SubMenu<Character> characterSubMenu, SubMenu<MangaCharacter> mangaCharacterSubMenu, QueriesMenu queriesMenu ) : IDisposable, IAsyncDisposable
     {
         public void Dispose()
         {
@@ -26,7 +26,7 @@ namespace manga_project.Menus
                             "\r\n (2) Manage Author (usefull)" +
                             "\r\n (3) Manage Character" +
                             "\r\n (4) Manage MangaCharacter " +
-                            "\r\n (5) Useful Queries (usefull)" +
+                            "\r\n (5) Useful Queries" +
                             "\r\n (6) Exit");
 
                 var choice = ReadLine();
@@ -44,6 +44,7 @@ namespace manga_project.Menus
                         mangaCharacterSubMenu.Work();
                         break;
                     case "5":
+                        queriesMenu.Work();
                         break;
                     case "6":
                         return;
