@@ -1,5 +1,4 @@
-﻿using manga_project.Domain;
-using manga_project.SeedWork;
+﻿using manga_project.SeedWork;
 using Microsoft.Data.SqlClient;
 using static System.Console;
 

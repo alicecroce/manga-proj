@@ -1,10 +1,5 @@
 ﻿using manga_project.Domain;
 using manga_project.SeedWork;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static System.Console;
 
 
@@ -15,7 +10,7 @@ namespace manga_project.Interviewers
         public Character Create()
         {
             Write("Insert name character: ");
-            var charName = ReadLine();;
+            var charName = ReadLine(); ;
 
             return new Character
             {
@@ -32,7 +27,8 @@ namespace manga_project.Interviewers
             var name = ReadLine();
 
 
-            if (int.TryParse(id, out var characterId) && !string.IsNullOrEmpty(name)) {
+            if (int.TryParse(id, out var characterId) && !string.IsNullOrEmpty(name))
+            {
                 new Character
                 {
                     CharacterId = int.Parse(id),

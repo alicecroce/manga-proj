@@ -5,7 +5,7 @@ using static System.Console;
 
 namespace manga_project.Menus
 {
-    public class MainMenu(SubMenu<Character> characterSubMenu) : IDisposable, IAsyncDisposable
+    public class MainMenu(SubMenu<Character> characterSubMenu, SubMenu<MangaCharacter> mangaCharacterSubMenu) : IDisposable, IAsyncDisposable
     {
         public void Dispose()
         {
@@ -21,12 +21,12 @@ namespace manga_project.Menus
         {
             while (true)
             {
-                WriteLine("\r\n Choose an operation on Manga: " +
-                            "\r\n (1) Manage Manga" +
-                            "\r\n (2) Manage Author" +
+                WriteLine("\r\n Choose an operation : " +
+                            "\r\n (1) Manage Manga (usefull)" +
+                            "\r\n (2) Manage Author (usefull)" +
                             "\r\n (3) Manage Character" +
                             "\r\n (4) Manage MangaCharacter " +
-                            "\r\n (5) Useful Queies" +
+                            "\r\n (5) Useful Queries (usefull)" +
                             "\r\n (6) Exit");
 
                 var choice = ReadLine();
@@ -41,6 +41,7 @@ namespace manga_project.Menus
                         characterSubMenu.Work();
                         break;
                     case "4":
+                        mangaCharacterSubMenu.Work();
                         break;
                     case "5":
                         break;

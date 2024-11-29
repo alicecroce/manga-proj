@@ -1,6 +1,4 @@
-﻿using manga_project.Domain;
-
-namespace manga_project.SeedWork
+﻿namespace manga_project.SeedWork
 {
     public interface IRepository<T> :IDisposable
     {

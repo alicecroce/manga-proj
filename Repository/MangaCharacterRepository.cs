@@ -1,33 +1,41 @@
 ﻿using manga_project.Domain;
 using manga_project.SeedWork;
+using Microsoft.EntityFrameworkCore;
 
 namespace manga_project.Repository
 {
-    public class MangaCharacterRepository : IRepository<MangaCharacter>
+    public class MangaCharacterRepository(AppDbContext ctx) : IRepository<MangaCharacter>
     {
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<MangaCharacter> GetAll()
-        {
-            throw new NotImplementedException();
-        }
 
         public void Insert(MangaCharacter entity)
         {
-            throw new NotImplementedException();
+            ctx.MangaCharacter.Add(entity);
+            ctx.SaveChanges();
         }
 
         public void Update(MangaCharacter entity)
         {
-            throw new NotImplementedException();
+            var mangaChar = ctx.MangaCharacter.Find(entity.MangaCharacterId);
+            if (mangaChar == null) return;
+            mangaChar.MangaId = entity.MangaId;
+            mangaChar.CharacterId = entity.CharacterId;
+            mangaChar.IsCrossover = entity.IsCrossover;
+            ctx.SaveChanges();
         }
+        public void Delete(int id)
+        {
+            var mangaCharacter = ctx.MangaCharacter.Find(id);
+            if (mangaCharacter == null) return;
+            ctx.MangaCharacter.Remove(mangaCharacter);
+            ctx.SaveChanges();
+        }
+
+        public void Dispose() => ctx.Dispose();
+
+        public IEnumerable<MangaCharacter> GetAll() => ctx.MangaCharacter.ToList();
+
+
+
+
     }
 }

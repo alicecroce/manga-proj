@@ -8,7 +8,6 @@ namespace manga_project
         //Tabelle
         public DbSet<Character> Characters { get; set; }
         public DbSet<Manga> Manga { get; set; }
-
         public DbSet<MangaCharacter> MangaCharacter { get; set; }
 
         //Configuro il db

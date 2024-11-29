@@ -7,10 +7,16 @@ using manga_project.SeedWork;
 using Microsoft.Extensions.DependencyInjection;
 
 var appDbContext = new AppDbContext();
+
 var characterRepository = new CharacterRepository(appDbContext);
 var characterInterviewer = new CharacterInterviewer();
+var mangaCharacterRepository= new MangaCharacterRepository(appDbContext);
+var mangaCharacterInterviewer= new MangaCharacterInterviewer();
+
 
 var characterSubMenu = new SubMenu<Character>(nameof(Character), characterRepository, characterInterviewer);
-using var unitOfWork = new MainMenu(characterSubMenu);
+var mangaCharacterSubMenu = new SubMenu<MangaCharacter>(nameof(MangaCharacter), mangaCharacterRepository, mangaCharacterInterviewer);
+
+using var unitOfWork = new MainMenu(characterSubMenu, mangaCharacterSubMenu);
 
 unitOfWork.Render();
