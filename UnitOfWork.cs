@@ -54,10 +54,10 @@ namespace manga_project
                             ReadAllCharacters();
                             break;
                         case "3":
-                            //UpdateCharacter();
+                            UpdateCharacter();
                             break;
                         case "4":
-                            //DeleteCharacter();
+                            DeleteCharacter();
                             break;
                         case "5":
                             return;
@@ -88,6 +88,34 @@ namespace manga_project
         {
             foreach (var character in characterRepository.GetCharacter()) WriteLine(character.ToString());
         }
+
+        private void UpdateCharacter()
+        {
+            Write("Insert the Id to update: ");
+            var id = ReadLine();
+
+            Write("Insert the name to update: ");
+            var name = ReadLine();
+
+
+            if (int.TryParse(id, out var characterId) && !string.IsNullOrEmpty(name)) 
+                characterRepository.UpdateCharacter(characterId, name);
+            //non ha parentesi perchè ha solo una istruzione da seguire quindi figura inline
+        }
+
+        private void DeleteCharacter()
+        {
+            Write("Insert the Id to Delete: ");
+            var id = ReadLine();
+
+            if (int.TryParse(id, out var characterId))
+                characterRepository.DeleteCharacter(characterId);
+            else
+                WriteLine("Id is not valid");
+        }
+
+
+
 
 
     }
