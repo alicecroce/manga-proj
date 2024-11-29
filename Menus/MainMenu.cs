@@ -2,7 +2,7 @@
 using Microsoft.Data.SqlClient;
 using static System.Console;
 
-namespace manga_project
+namespace manga_project.Menus
 {
     public class MainMenu(SubMenu characterSubMenu) : IDisposable, IAsyncDisposable
     {
@@ -20,14 +20,14 @@ namespace manga_project
         {
             while (true)
             {
-                WriteLine(  "\r\n Choose an operation on Manga: " +
+                WriteLine("\r\n Choose an operation on Manga: " +
                             "\r\n (1) Manage Manga" +
                             "\r\n (2) Manage Author" +
                             "\r\n (3) Manage Character" +
                             "\r\n (4) Manage MangaCharacter " +
                             "\r\n (5) Useful Queies" +
                             "\r\n (6) Exit");
-                
+
                 var choice = ReadLine();
 
                 switch (choice)

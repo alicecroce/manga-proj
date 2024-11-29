@@ -4,26 +4,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace manga_project.Repository
 {
-    public class CharacterRepository(AppDbContext ctx) : ICharRepository,IDisposable
+    public class CharacterRepository(AppDbContext ctx) : IRepository<Character> ,IDisposable
     {
-        public void InsertCharacter(string name)
+        public void Insert(Character entity)
         {
-            ctx.Characters.Add(new()
-            {
-                Name = name
-            });
+            ctx.Characters.Add(entity);
             ctx.SaveChanges();
         }
 
-        public void UpdateCharacter(int id, string name)
+        public void Update(Character entity)
         {
-            var character = ctx.Characters.Find(id);
+            var character = ctx.Characters.Find(entity.CharacterId);
             if (character == null) return;
-            character.Name = name;
+            character.Name = entity.Name;
             ctx.SaveChanges();
         }
 
-        public void DeleteCharacter(int id)
+        public void Delete(int id)
         {
             var character = ctx.Characters.Find(id);
             if (character == null) return;
@@ -31,7 +28,7 @@ namespace manga_project.Repository
             ctx.SaveChanges();
         }
 
-        public IEnumerable<Character> GetCharacter() => ctx.Characters.ToList();
+        public IEnumerable<Character> GetAll() => ctx.Characters.ToList();
        
         public void Dispose() => ctx.Dispose();
 

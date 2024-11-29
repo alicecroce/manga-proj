@@ -1,11 +1,12 @@
-﻿using manga_project.SeedWork;
+﻿using manga_project.Domain;
+using manga_project.SeedWork;
 using Microsoft.Data.SqlClient;
 using static System.Console;
 
-namespace manga_project
+namespace manga_project.Menus
 {
 
-    public class SubMenu(ICharRepository characterRepository) : IDisposable
+    public class SubMenu(IRepository<Character> characterRepository) : IDisposable
     {
 
         public void Dispose()
@@ -32,36 +33,36 @@ namespace manga_project
 
             void InternalWork()
             {
-   
-                    WriteLine("\r\n Choose an operation on Manga: " +
-                        "\r\n (1) Insert Character " +
-                        "\r\n (2) Read All Character " +
-                        "\r\n (3) Update Character " +
-                        "\r\n (4) Delete Character " +
-                        "\r\n (5) Exit");
-                    var choice = ReadLine();
 
-                    switch (choice)
-                    {
-                        case "1":
-                            InsertCharacter();
-                            break;
-                        case "2":
-                            ReadAllCharacters();
-                            break;
-                        case "3":
-                            UpdateCharacter();
-                            break;
-                        case "4":
-                            DeleteCharacter();
-                            break;
-                        case "5":
-                            return;
-                        default:
-                            WriteLine("Invalid choice, please try again!");
-                            break;
-                    }
-                
+                WriteLine("\r\n Choose an operation on Manga: " +
+                    "\r\n (1) Insert Character " +
+                    "\r\n (2) Read All Character " +
+                    "\r\n (3) Update Character " +
+                    "\r\n (4) Delete Character " +
+                    "\r\n (5) Exit");
+                var choice = ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        InsertCharacter();
+                        break;
+                    case "2":
+                        ReadAllCharacters();
+                        break;
+                    case "3":
+                        UpdateCharacter();
+                        break;
+                    case "4":
+                        DeleteCharacter();
+                        break;
+                    case "5":
+                        return;
+                    default:
+                        WriteLine("Invalid choice, please try again!");
+                        break;
+                }
+
             }
         }
 
@@ -77,12 +78,15 @@ namespace manga_project
                 return;
             }
 
-            characterRepository.InsertCharacter(charName);
+            characterRepository.Insert(new Character
+            {
+                Name = charName,
+            });
         }
 
         private void ReadAllCharacters()
         {
-            foreach (var character in characterRepository.GetCharacter()) WriteLine(character.ToString());
+            foreach (var character in characterRepository.GetAll()) WriteLine(character.ToString());
         }
 
         private void UpdateCharacter()
@@ -95,7 +99,11 @@ namespace manga_project
 
 
             if (int.TryParse(id, out var characterId) && !string.IsNullOrEmpty(name))
-                characterRepository.UpdateCharacter(characterId, name);
+                characterRepository.Update(new Character
+                {
+                    CharacterId = int.Parse(id),
+                    Name = name
+                } );
             //non ha parentesi perchè ha solo una istruzione da seguire quindi figura inline
         }
 
@@ -105,7 +113,7 @@ namespace manga_project
             var id = ReadLine();
 
             if (int.TryParse(id, out var characterId))
-                characterRepository.DeleteCharacter(characterId);
+                characterRepository.Delete(characterId);
             else
                 WriteLine("Id is not valid");
         }
